@@ -18,6 +18,7 @@ public class ElevatorSimulation {
     public static ResponseListHeadNode responseList;
 
     public static void main(String[] args) {
+        // TODO: add args to the program
         try {
             int param = systemInit();
             if(param!=1) {
@@ -26,34 +27,18 @@ public class ElevatorSimulation {
                 System.out.println("Initialization succeeded!");
                 // if (args.length == 0) {
                 //     System.out.println("usage: you should add at least 1 parameter for a command.");
-                // } else {
-                //     int option = Integer.parseInt(args[0]);
-                //     switch (option) {
-                //         case 1:
-                //             System.out.println("option 1");
-                //             // silence simulation
-                //             break;
-                //         case 2:
-                //             System.out.println("option 2");
-                //             // animation simulation 
-                //             break;
-                //         case 3:
-                //             System.out.println("option 3");
-                //             // comprehensive simulation
-                //             break;
-                //         case 4:
-                //             System.out.println("option 4");
-                //             // replay
-                //             break;
-                //         case 5:
-                //             System.out.println("option 5");
-                //             // configuration settings
-                //             break;
-                //         default:
-                //             // other options
-                //             break;
-                //     }
                 // }
+                // try {
+                //     Integer.parseInt(args[0]);
+                // } catch (NumberFormatException e) {
+                //     System.out.println("ERROR: the first argument should be an Integer to indicate an option");
+                // }
+                // int menuFlag = Integer.parseInt(args[0]);
+                int menuFlag = 0;
+                if(menuFlag<0) {
+                     System.out.println("ERROR: the first argument Integer should be positive");
+                }
+                showMenu(menuFlag);
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -89,32 +74,30 @@ public class ElevatorSimulation {
                     checkResult = -3;
                     scanner.close();
                     return checkResult;
-                } else {
-                    if(pt>=totalNum) {
-                        checkResult = -7;
-                        scanner.close();
-                        return checkResult;
-                    }
-                    keys[pt] = strs[0];
-                    values[pt] = requestFile.getAbsolutePath();
-                    pt++;
                 }
+                if(pt>=totalNum) {
+                    checkResult = -7;
+                    scanner.close();
+                    return checkResult;
+                }
+                keys[pt] = strs[0];
+                values[pt] = requestFile.getAbsolutePath();
+                pt++;
             } else if(strs[0].equals("SimulationFilesPath")) {
                 File simulationFile = new File(System.getProperty("user.dir")+"/"+strs[1]);
                 if(!simulationFile.exists()) {
                     checkResult = -4;
                     scanner.close();
                     return checkResult;
-                } else {
-                    if(pt>=totalNum) {
-                        checkResult = -7;
-                        scanner.close();
-                        return checkResult;
-                    }
-                    keys[pt] = strs[0];
-                    values[pt] = simulationFile.getAbsolutePath();
-                    pt++;
                 }
+                if(pt>=totalNum) {
+                    checkResult = -7;
+                    scanner.close();
+                    return checkResult;
+                }
+                keys[pt] = strs[0];
+                values[pt] = simulationFile.getAbsolutePath();
+                pt++;
             } else if(strs[0].equals("ElevatorHeight")) {
                 // judge whether ElevatorHeight is an Integer
                 try {
@@ -128,16 +111,15 @@ public class ElevatorSimulation {
                     checkResult = -5;
                     scanner.close();
                     return checkResult;
-                } else {
-                    if(pt>=totalNum) {
-                        checkResult = -7;
-                        scanner.close();
-                        return checkResult;
-                    }
-                    keys[pt] = strs[0];
-                    values[pt] = strs[1];
-                    pt++;
+                } 
+                if(pt>=totalNum) {
+                    checkResult = -7;
+                    scanner.close();
+                    return checkResult;
                 }
+                keys[pt] = strs[0];
+                values[pt] = strs[1];
+                pt++;
             } else if(strs[0].equals("DelayTime")) {
                 try {
                     Integer.parseInt(strs[1]);
@@ -150,16 +132,15 @@ public class ElevatorSimulation {
                     checkResult = -6;
                     scanner.close();
                     return checkResult;
-                } else {
-                    if(pt>=totalNum) {
-                        checkResult = -7;
-                        scanner.close();
-                        return checkResult;
-                    }
-                    keys[pt] = strs[0];
-                    values[pt] = strs[1];
-                    pt++;
                 }
+                if(pt>=totalNum) {
+                    checkResult = -7;
+                    scanner.close();
+                    return checkResult;
+                }
+                keys[pt] = strs[0];
+                values[pt] = strs[1];
+                pt++;
             } else {
                 checkResult = -8;
                 scanner.close();
@@ -173,5 +154,37 @@ public class ElevatorSimulation {
         scanner.close();
         sysParam = new SysParam(keys, values);
         return checkResult;
+    }
+
+    public static void showMenu(int menuFlag) {
+        // TODO: finish showMenu function
+        switch (menuFlag) {
+            case 1:
+                System.out.println("option 1");
+                // silence simulation
+                break;
+            case 2:
+                System.out.println("option 2");
+                // animation simulation 
+                break;
+            case 3:
+                System.out.println("option 3");
+                // comprehensive simulation
+                break;
+            case 4:
+                System.out.println("option 4");
+                // replay
+                break;
+            case 5:
+                System.out.println("option 5");
+                // configuration settings
+                break;
+            case 0:
+                System.out.println("Now exit");
+                break;
+            default:
+                // other options
+                break;
+        }
     }
 }
