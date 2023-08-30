@@ -196,7 +196,7 @@ public class ElevatorSimulation {
         File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
         System.out.println(f.getAbsolutePath());
         DataImport dataImport = new DataImport();
-        // DataExport dataExport = new DataExport();
+        DataExport dataExport = new DataExport();
         
         dataImport.initSimulation();
 
@@ -206,7 +206,7 @@ public class ElevatorSimulation {
             e.printStackTrace();
         }
         
-        // dataExport.outputSimulationResult();
+        dataExport.outputSimulationResult();
     }
 
     public static void movieSimulate() {

@@ -15,7 +15,7 @@ public class ResponseCalculate {
         }
 
         //电梯停止且没有指令，把新指令加到电梯响应队列
-        if(elevator.serveList==null) {
+        if(elevator.serveList.nodeNum == 0) {
             if(ElevatorSimulation.responseList.nodeNum>0) {
                 ResponseListNode node = ElevatorSimulation.responseList.head.next;
                 node.prev.next = node.next;
@@ -29,12 +29,18 @@ public class ResponseCalculate {
                 } else {
                     serveState = 'P';
                 }
-                elevator.serveList = new ServeListNode(serveState, ElevatorSimulation.userCallList[node.userCallIdx]);
+                ServeListNode serveNode = new ServeListNode(serveState, ElevatorSimulation.userCallList[node.userCallIdx]);
+                ServeListNode prev = elevator.serveList.tail.prev;
+                prev.next = serveNode;
+                serveNode.prev = prev;
+                serveNode.next = elevator.serveList.tail;
+                elevator.serveList.tail.prev = serveNode;
+                elevator.serveList.nodeNum += 1;
                 
                 char nextRunState = getElevatorDirection(elevator);
                 findUserCallCanServe(elevator, nextRunState);
             } 
-        } else {
+        } else if(elevator.serveList.nodeNum > 0) {
             // 电梯响应队列不为空，可能停止（刚服务完一个user），可能在动（服务中）
             if(elevator.runState=='S') {
                 char nextRunState = getElevatorDirection(elevator);
@@ -44,6 +50,8 @@ public class ResponseCalculate {
             } else {
                 findUserCallCanServe(elevator, elevator.runState);
             }
+        } else {
+            System.out.println("ERROR: elevator.serveList.nodeNum < 0");
         }
 
         setElevatorState(elevator);
@@ -52,8 +60,9 @@ public class ResponseCalculate {
     public void findUserCallCanServe(ElevatorState elevator, char rState) {
         if(ElevatorSimulation.responseList.nodeNum==0) return;
 
-        int uf = elevator.serveList.userCall.userFloor;
-        char us = elevator.serveList.userCall.callType;
+        int tt = ElevatorSimulation.time;
+        int uf = elevator.serveList.head.next.userCall.userFloor;
+        char us = elevator.serveList.head.next.userCall.callType;
         char ue = elevator.runState;
 
         ResponseListNode node = ElevatorSimulation.responseList.head.next;
@@ -87,16 +96,15 @@ public class ResponseCalculate {
                 ElevatorSimulation.responseList.nodeNum -= 1;
                 ElevatorSimulation.statusChangeFlag = true;
 
-                // find the tail of serveList
-                ServeListNode node3 = elevator.serveList;
-                while(node3.next!=null) {
-                    node3 = node3.next;
-                }
-
                 // add a node for serveList
                 char serveState = (f==m)?'E':'P';
-                node3.next = new ServeListNode(serveState, ElevatorSimulation.userCallList[node2.userCallIdx]);
-                node3.next.prev = node3;
+                ServeListNode serveNode = new ServeListNode(serveState, ElevatorSimulation.userCallList[node2.userCallIdx]);
+                ServeListNode prev = elevator.serveList.tail.prev;
+                prev.next = serveNode;
+                serveNode.prev = prev;
+                elevator.serveList.tail.prev = serveNode;
+                serveNode.next = elevator.serveList.tail;
+                elevator.serveList.nodeNum += 1;
             } else {
                 node = node.next;
             }
@@ -105,10 +113,10 @@ public class ResponseCalculate {
 
     public char getElevatorDirection(ElevatorState elevator) {
         char eStatus = ' ';
-        if(elevator.serveList==null) {
+        if(elevator.serveList.nodeNum == 0) {
             eStatus = 'S';
         } else {
-            ServeListNode p = elevator.serveList;
+            ServeListNode p = elevator.serveList.head.next;
             int m = elevator.currentFloor;
             if(p.serveState=='P') {
                 int f = p.userCall.userFloor;
@@ -134,9 +142,9 @@ public class ResponseCalculate {
         char eRs = elevator.runState;
         int stepFlag = 0;
 
-        if(elevator.serveList!=null) {
-            ServeListNode p = elevator.serveList;
-            while(p!=null) {
+        if(elevator.serveList.nodeNum != 0) {
+            ServeListNode p = elevator.serveList.head.next;
+            while(p!=elevator.serveList.tail) {
                 int f = p.userCall.userFloor;
                 int t = p.userCall.userTarget;
                 char s = p.serveState;
@@ -147,24 +155,12 @@ public class ResponseCalculate {
                         elevator.runState = 'S';
                         ElevatorSimulation.statusChangeFlag = true;
                         // delete the node
-                        if(p==elevator.serveList) {
-                            if(p.next==null) {
-                                elevator.serveList = null;
-                            } else {
-                                elevator.serveList = elevator.serveList.next;
-                                elevator.serveList.prev = null;
-                                p = elevator.serveList;
-                            }
-                        } else {
-                            if(p.next==null) {
-                                p.prev.next = null;
-                                p = null;
-                            } else {
-                                p = p.next;
-                                p.next.prev = p.prev;
-                                p.prev.next = p.next;
-                            }
-                        }
+                        ServeListNode pp = p;
+                        p = p.next;
+                        pp.prev.next = pp.next;
+                        pp.next.prev = pp.prev;
+                        elevator.serveList.nodeNum -= 1;
+
                         ElevatorSimulation.finishCallNum += 1;
                     } else {
                         if(s=='P'&&f==m+1) {
@@ -182,24 +178,12 @@ public class ResponseCalculate {
                         elevator.runState = 'S';
                         ElevatorSimulation.statusChangeFlag = true;
                         // delete the node
-                        if(p==elevator.serveList) {
-                            if(p.next==null) {
-                                elevator.serveList = null;
-                            } else {
-                                elevator.serveList = elevator.serveList.next;
-                                elevator.serveList.prev = null;
-                                p = elevator.serveList;
-                            }
-                        } else {
-                            if(p.next==null) {
-                                p.prev.next = null;
-                                p = null;
-                            } else {
-                                p = p.next;
-                                p.next.prev = p.prev;
-                                p.prev.next = p.next;
-                            }
-                        }
+                        ServeListNode pp = p;
+                        p = p.next;
+                        pp.prev.next = pp.next;
+                        pp.next.prev = pp.prev;
+                        elevator.serveList.nodeNum -= 1;
+
                         ElevatorSimulation.finishCallNum += 1;
                     } else {
                         if(s=='P'&&f==m-1) {

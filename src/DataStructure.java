@@ -29,6 +29,21 @@ class UserCall {
 }
 
 // 电梯服务指令队列（双向链表）
+
+class ServeListHeadNode {
+    public ServeListNode head;
+    public ServeListNode tail;
+    public int nodeNum;
+
+    public ServeListHeadNode() {
+        head = new ServeListNode('N', null);
+        tail = new ServeListNode('N', null);
+        head.next = tail;
+        tail.prev = head;
+        nodeNum = 0;
+    }
+}
+
 class ServeListNode {
     // 'E' start serving, or 'P' before serving
     public char serveState;
@@ -50,12 +65,12 @@ class ElevatorState {
     // 'S', 'U', or 'D'
     public char runState;
     // 电梯服务队列
-    public ServeListNode serveList;
+    public ServeListHeadNode serveList;
 
     public ElevatorState(int currentFloor, char runState) {
         this.currentFloor = currentFloor;
         this.runState = runState;
-        serveList = null;
+        serveList = new ServeListHeadNode();
     }
 }
 
