@@ -1,6 +1,8 @@
+import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import javax.swing.JFrame;
 
 public class ElevatorSimulation {
     // 两部电梯
@@ -216,7 +218,6 @@ public class ElevatorSimulation {
         File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
         System.out.println(f.getAbsolutePath());
         DataImport dataImport = new DataImport();
-        ScreenSimulation screenSimulation = new ScreenSimulation();
 
         dataImport.initSimulation();
 
@@ -226,8 +227,21 @@ public class ElevatorSimulation {
             e.printStackTrace();
         }
 
-        screenSimulation.showMovie();
+        System.out.println("Initialization Done");
 
+        // call animation to print
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("Movie Simulation");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                DrawUI ui = new DrawUI();
+                frame.add(ui);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
     }
 
     public static void fullSimulate() {
