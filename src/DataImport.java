@@ -14,7 +14,9 @@ public class DataImport {
     // }
 
     public void initSimulation() {
-        if(ElevatorSimulation.responseList.nodeNum>0) {
+        if(ElevatorSimulation.responseList==null) {
+            ElevatorSimulation.responseList = new ResponseListHeadNode();
+        } else if(ElevatorSimulation.responseList.nodeNum>0) {
             ElevatorSimulation.responseList.head.next = ElevatorSimulation.responseList.tail;
             ElevatorSimulation.responseList.head.prev = null;
             ElevatorSimulation.responseList.tail.prev = ElevatorSimulation.responseList.head;
@@ -25,14 +27,21 @@ public class DataImport {
     }
 
     public void initElevator() {
-        ElevatorSimulation.elevatorA.currentFloor = 1;
-        ElevatorSimulation.elevatorA.runState = 'S';
-        ElevatorSimulation.elevatorA.serveList = null;
-
-        ElevatorSimulation.elevatorB.currentFloor = 1;
-        ElevatorSimulation.elevatorB.runState = 'S';
-        ElevatorSimulation.elevatorB.serveList = null;
-
+        if(ElevatorSimulation.elevatorA==null) {
+            ElevatorSimulation.elevatorA = new ElevatorState(1, 'S');
+        } else {
+            ElevatorSimulation.elevatorA.currentFloor = 1;
+            ElevatorSimulation.elevatorA.runState = 'S';
+            ElevatorSimulation.elevatorA.serveList = null;
+        }
+        
+        if(ElevatorSimulation.elevatorB==null) {
+            ElevatorSimulation.elevatorB = new ElevatorState(1, 'S');
+        } else {
+            ElevatorSimulation.elevatorB.currentFloor = 1;
+            ElevatorSimulation.elevatorB.runState = 'S';
+            ElevatorSimulation.elevatorB.serveList = null;
+        }
     }
 
     public int loadUserCallArray(File fp) throws FileNotFoundException {
