@@ -130,6 +130,107 @@ public class ResponseCalculate {
     }
 
     public void setElevatorState(ElevatorState elevator) {
+        int m = elevator.currentFloor;
+        char eRs = elevator.runState;
+        int stepFlag = 0;
 
+        if(elevator.serveList!=null) {
+            ServeListNode p = elevator.serveList;
+            while(p!=null) {
+                int f = p.userCall.userFloor;
+                int t = p.userCall.userTarget;
+                char s = p.serveState;
+
+                if(eRs=='U') {
+                    stepFlag = 1;
+                    if(s=='E'&&t==m+1) {
+                        elevator.runState = 'S';
+                        ElevatorSimulation.statusChangeFlag = true;
+                        // delete the node
+                        if(p==elevator.serveList) {
+                            if(p.next==null) {
+                                elevator.serveList = null;
+                            } else {
+                                elevator.serveList = elevator.serveList.next;
+                                elevator.serveList.prev = null;
+                                p = elevator.serveList;
+                            }
+                        } else {
+                            if(p.next==null) {
+                                p.prev.next = null;
+                                p = null;
+                            } else {
+                                p = p.next;
+                                p.next.prev = p.prev;
+                                p.prev.next = p.next;
+                            }
+                        }
+                        ElevatorSimulation.finishCallNum += 1;
+                    } else {
+                        if(s=='P'&&f==m+1) {
+                            elevator.runState = 'S';
+                            p.serveState = 'E';
+                            ElevatorSimulation.statusChangeFlag = true;
+                            p = p.next;
+                        } else {
+                            p = p.next;
+                        }
+                    }
+                } else if(eRs=='D') { 
+                    stepFlag = -1;
+                    if(s=='E'&&t==m-1) {
+                        elevator.runState = 'S';
+                        ElevatorSimulation.statusChangeFlag = true;
+                        // delete the node
+                        if(p==elevator.serveList) {
+                            if(p.next==null) {
+                                elevator.serveList = null;
+                            } else {
+                                elevator.serveList = elevator.serveList.next;
+                                elevator.serveList.prev = null;
+                                p = elevator.serveList;
+                            }
+                        } else {
+                            if(p.next==null) {
+                                p.prev.next = null;
+                                p = null;
+                            } else {
+                                p = p.next;
+                                p.next.prev = p.prev;
+                                p.prev.next = p.next;
+                            }
+                        }
+                        ElevatorSimulation.finishCallNum += 1;
+                    } else {
+                        if(s=='P'&&f==m-1) {
+                            elevator.runState = 'S';
+                            p.serveState = 'E';
+                            ElevatorSimulation.statusChangeFlag = true;
+                            p = p.next;
+                        } else {
+                            p = p.next;
+                        }
+                    }
+                } else {
+                    if(s=='P') {
+                        if(f>m) {
+                            elevator.runState = 'U';
+                        } else {
+                            elevator.runState = 'D';
+                        }
+                        ElevatorSimulation.statusChangeFlag = true;
+                    } else if(s=='E') {
+                        if(t>m) {
+                            elevator.runState = 'U';
+                        } else {
+                            elevator.runState = 'D';
+                        }
+                        ElevatorSimulation.statusChangeFlag = true;
+                    }
+                    break;
+                }
+            }
+        }
+        elevator.currentFloor = elevator.currentFloor+stepFlag;
     }
 }
