@@ -6,8 +6,8 @@
 10,1,20
 *********************************************************************************************
 4
-UserRequestFilesPath=/mnt/d/Github/elevator_simulator/UserRequests
-SimulationFilesPath=/mnt/d/Github/elevator_simulator/SimulationFiles
+UserRequestFilesPath=/mnt/c/Users/kwan/github/elevator_simulator/UserRequests
+SimulationFilesPath=/mnt/c/Users/kwan/github/elevator_simulator/SimulationFiles
 DelayTime=1000
 ElevatorHeight=11
 *********************************************************************************************

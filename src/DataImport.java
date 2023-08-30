@@ -23,6 +23,7 @@ public class DataImport {
             ElevatorSimulation.responseList.tail.next = null;
             ElevatorSimulation.responseList.nodeNum = 0;
         }
+        ElevatorSimulation.finishCallNum = 0;
         initElevator();
     }
 
@@ -32,7 +33,7 @@ public class DataImport {
         } else {
             ElevatorSimulation.elevatorA.currentFloor = 1;
             ElevatorSimulation.elevatorA.runState = 'S';
-            ElevatorSimulation.elevatorA.serveList = null;
+            ElevatorSimulation.elevatorA.serveList = new ServeListHeadNode();
         }
         
         if(ElevatorSimulation.elevatorB==null) {
@@ -40,7 +41,7 @@ public class DataImport {
         } else {
             ElevatorSimulation.elevatorB.currentFloor = 1;
             ElevatorSimulation.elevatorB.runState = 'S';
-            ElevatorSimulation.elevatorB.serveList = null;
+            ElevatorSimulation.elevatorB.serveList = new ServeListHeadNode();
         }
     }
 
