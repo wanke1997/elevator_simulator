@@ -23,11 +23,14 @@ public class DataImport {
             ElevatorSimulation.responseList.tail.next = null;
             ElevatorSimulation.responseList.nodeNum = 0;
         }
+        if(ElevatorSimulation.userCallList!=null) {
+            ElevatorSimulation.userCallList = null;
+        }
         ElevatorSimulation.finishCallNum = 0;
         initElevator();
     }
 
-    public void initElevator() {
+    private void initElevator() {
         if(ElevatorSimulation.elevatorA==null) {
             ElevatorSimulation.elevatorA = new ElevatorState(1, 'S');
         } else {

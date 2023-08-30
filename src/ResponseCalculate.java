@@ -57,7 +57,7 @@ public class ResponseCalculate {
         setElevatorState(elevator);
     }
 
-    public void findUserCallCanServe(ElevatorState elevator, char rState) {
+    private void findUserCallCanServe(ElevatorState elevator, char rState) {
         if(ElevatorSimulation.responseList.nodeNum==0) return;
 
         int uf = elevator.serveList.head.next.userCall.userFloor;
@@ -110,7 +110,7 @@ public class ResponseCalculate {
         }
     }
 
-    public char getElevatorDirection(ElevatorState elevator) {
+    private char getElevatorDirection(ElevatorState elevator) {
         char eStatus = ' ';
         if(elevator.serveList.nodeNum == 0) {
             eStatus = 'S';
@@ -136,7 +136,7 @@ public class ResponseCalculate {
         return eStatus;
     }
 
-    public void setElevatorState(ElevatorState elevator) {
+    private void setElevatorState(ElevatorState elevator) {
         int m = elevator.currentFloor;
         char eRs = elevator.runState;
         int stepFlag = 0;

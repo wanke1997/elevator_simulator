@@ -41,7 +41,8 @@ public class ElevatorSimulation {
                      System.out.println("ERROR: the first argument Integer should be positive");
                 }
                 // showMenu(menuFlag);
-                silenceSimulate();
+                // silenceSimulate();
+                movieSimulate();
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -210,6 +211,22 @@ public class ElevatorSimulation {
     }
 
     public static void movieSimulate() {
+        // TODO: 根据流程图补全流程
+        System.out.println("movieSimulate() function");
+        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
+        System.out.println(f.getAbsolutePath());
+        DataImport dataImport = new DataImport();
+        ScreenSimulation screenSimulation = new ScreenSimulation();
+
+        dataImport.initSimulation();
+
+        try {
+            dataImport.loadUserCallArray(f);
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        screenSimulation.showMovie();
 
     }
 
