@@ -30,6 +30,7 @@ class UserCall {
 
 // 电梯服务指令队列（双向链表）
 class ServeListNode {
+    // 'E' start serving, or 'P' before serving
     public char serveState;
     public UserCall userCall;
     public ServeListNode prev;
@@ -46,6 +47,7 @@ class ServeListNode {
 // 电梯状态
 class ElevatorState {
     public int currentFloor;
+    // 'S', 'U', or 'D'
     public char runState;
     // 电梯服务队列
     public ServeListNode serveList;
@@ -63,12 +65,12 @@ class ElevatorState {
 
 // 电梯待响应数据
 class ResponseListNode {
-    public UserCall userCall;
+    public int userCallIdx;
     public ResponseListNode prev;
     public ResponseListNode next;
 
-    public ResponseListNode(UserCall userCall) {
-        this.userCall = userCall;
+    public ResponseListNode(int userCallIdx) {
+        this.userCallIdx = userCallIdx;
         prev = null;
         next = null;
     }
@@ -77,12 +79,16 @@ class ResponseListNode {
 class ResponseListHeadNode {
     public ResponseListNode head;
     public ResponseListNode tail;
+    public int nodeNum;
+    public int nextIdx;
 
     public ResponseListHeadNode() {
-        head = new ResponseListNode(null);
-        tail = new ResponseListNode(null);
+        head = new ResponseListNode(-1);
+        tail = new ResponseListNode(-1);
         head.next = tail;
         tail.prev = head;
+        nodeNum = 0;
+        nextIdx = 0;
     }
 }
 

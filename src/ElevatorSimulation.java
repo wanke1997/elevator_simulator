@@ -16,6 +16,8 @@ public class ElevatorSimulation {
     public static boolean statusChangeFlag;
     // 电梯待响应指令队列（双向链表）
     public static ResponseListHeadNode responseList;
+    // 用户指令数组
+    public static UserCall[] userCallList;
 
     public static void main(String[] args) {
         // TODO: add args to the program
@@ -186,5 +188,25 @@ public class ElevatorSimulation {
                 // other options
                 break;
         }
+    }
+
+    public static void silenceSimulate() {
+
+    }
+
+    public static void movieSimulate() {
+
+    }
+
+    public static void fullSimulate() {
+
+    }
+
+    public static void historySimulate() {
+
+    }
+
+    public static void paramConf() {
+
     }
 }
