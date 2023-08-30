@@ -29,7 +29,7 @@ public class ResponseCalculate {
                 } else {
                     serveState = 'P';
                 }
-                ServeListNode serveNode = new ServeListNode(serveState, ElevatorSimulation.userCallList[node.userCallIdx]);
+                ServeListNode serveNode = new ServeListNode(serveState, ElevatorSimulation.userCallList[node.userCallIdx], node.userCallIdx);
                 ServeListNode prev = elevator.serveList.tail.prev;
                 prev.next = serveNode;
                 serveNode.prev = prev;
@@ -60,7 +60,6 @@ public class ResponseCalculate {
     public void findUserCallCanServe(ElevatorState elevator, char rState) {
         if(ElevatorSimulation.responseList.nodeNum==0) return;
 
-        int tt = ElevatorSimulation.time;
         int uf = elevator.serveList.head.next.userCall.userFloor;
         char us = elevator.serveList.head.next.userCall.callType;
         char ue = elevator.runState;
@@ -98,7 +97,7 @@ public class ResponseCalculate {
 
                 // add a node for serveList
                 char serveState = (f==m)?'E':'P';
-                ServeListNode serveNode = new ServeListNode(serveState, ElevatorSimulation.userCallList[node2.userCallIdx]);
+                ServeListNode serveNode = new ServeListNode(serveState, ElevatorSimulation.userCallList[node2.userCallIdx], node2.userCallIdx);
                 ServeListNode prev = elevator.serveList.tail.prev;
                 prev.next = serveNode;
                 serveNode.prev = prev;

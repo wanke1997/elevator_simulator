@@ -36,8 +36,8 @@ class ServeListHeadNode {
     public int nodeNum;
 
     public ServeListHeadNode() {
-        head = new ServeListNode('N', null);
-        tail = new ServeListNode('N', null);
+        head = new ServeListNode('N', null, -1);
+        tail = new ServeListNode('N', null, -1);
         head.next = tail;
         tail.prev = head;
         nodeNum = 0;
@@ -48,12 +48,14 @@ class ServeListNode {
     // 'E' start serving, or 'P' before serving
     public char serveState;
     public UserCall userCall;
+    public int userCallIdx;
     public ServeListNode prev;
     public ServeListNode next;
 
-    public ServeListNode(char serveState, UserCall userCall) {
+    public ServeListNode(char serveState, UserCall userCall, int userCallIdx) {
         this.serveState = serveState;
         this.userCall = userCall;
+        this.userCallIdx = userCallIdx;
         prev = null;
         next = null;
     }
