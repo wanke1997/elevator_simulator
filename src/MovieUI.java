@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
  
-public class DrawUI extends JPanel {
+public class MovieUI extends JPanel {
     private int elevatorHeight;
     private int panelHeight;
     private int panelWidth;
  
-    public DrawUI() {
+    public MovieUI() {
         elevatorHeight = Integer.parseInt(ElevatorSimulation.sysParam.configs.get("ElevatorHeight"));
         panelWidth = 25*elevatorHeight+450;
         panelHeight = 50*elevatorHeight+160;

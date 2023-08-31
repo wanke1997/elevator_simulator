@@ -55,7 +55,7 @@ public class DataExport {
         return 1;
     }
 
-    private void importUserCall(FileWriter writer) throws IOException {
+    public void importUserCall(FileWriter writer) throws IOException {
         int total = ElevatorSimulation.userCallList.length;
         writer.write(total+"\n");
         for(int i=0;i<total;i++) {
@@ -66,7 +66,7 @@ public class DataExport {
         writer.write("*********************************************************************************************\n");
     }
 
-    private void importSimulateParam(FileWriter writer) throws IOException {
+    public void importSimulateParam(FileWriter writer) throws IOException {
         int total = ElevatorSimulation.sysParam.configs.size();
         writer.write(total+"\n");
         for(String key:ElevatorSimulation.sysParam.configs.keySet()) {

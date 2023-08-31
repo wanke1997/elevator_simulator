@@ -1,6 +1,8 @@
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFrame;
 
@@ -44,7 +46,8 @@ public class ElevatorSimulation {
                 }
                 // showMenu(menuFlag);
                 // silenceSimulate();
-                movieSimulate();
+                // movieSimulate();
+                fullSimulate();
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -235,7 +238,7 @@ public class ElevatorSimulation {
             public void run() {
                 JFrame frame = new JFrame("Movie Simulation");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                DrawUI ui = new DrawUI();
+                MovieUI ui = new MovieUI();
                 frame.add(ui);
                 frame.pack();
                 frame.setLocationRelativeTo(null);
@@ -245,7 +248,43 @@ public class ElevatorSimulation {
     }
 
     public static void fullSimulate() {
+        // TODO: 根据流程图补全流程
+        System.out.println("movieSimulate() function");
+        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
+        System.out.println(f.getAbsolutePath());
+        DataImport dataImport = new DataImport();
 
+        dataImport.initSimulation();
+
+        try {
+            dataImport.loadUserCallArray(f);
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Initialization Done");
+
+        File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/request1_result_full.txt");
+        try {
+            resultFile.createNewFile();
+            FileWriter writer = new FileWriter(resultFile);
+            new DataExport().importUserCall(writer);
+            new DataExport().importSimulateParam(writer);
+            writer.close();
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JFrame frame = new JFrame("Full Simulation");
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    FullUI ui = new FullUI(resultFile.getAbsolutePath());
+                    frame.add(ui);
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                }
+            });
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void historySimulate() {
