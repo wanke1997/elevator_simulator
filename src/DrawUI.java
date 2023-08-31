@@ -14,16 +14,19 @@ public class DrawUI extends JPanel {
         elevatorHeight = Integer.parseInt(ElevatorSimulation.sysParam.configs.get("ElevatorHeight"));
         panelWidth = 25*elevatorHeight+450;
         panelHeight = 50*elevatorHeight+160;
-
-        Timer timer = new Timer(1000, new ActionListener() {
+        int delayTime = 1000;
+        if(ElevatorSimulation.sysParam.configs.containsKey("DelayTime")) {
+            delayTime = Integer.parseInt(ElevatorSimulation.sysParam.configs.get("DelayTime"));
+        }
+        Timer timer = new Timer(delayTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(ElevatorSimulation.finishCallNum<ElevatorSimulation.userCallList.length) {
+                    ElevatorSimulation.time += 1;
                     ResponseCalculate calculator = new ResponseCalculate();
                     calculator.getNextTimeStatus(ElevatorSimulation.elevatorA);
                     calculator.getNextTimeStatus(ElevatorSimulation.elevatorB);
                     repaint();
-                    ElevatorSimulation.time += 1;
                 } else {
                     return;
                 }
