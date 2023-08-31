@@ -60,11 +60,9 @@ public class Methods {
 
     public static void fullSimulate() {
         // TODO: 根据流程图补全流程
-        System.out.println("fullSimulate() function");
         File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
         System.out.println(f.getAbsolutePath());
         DataImport dataImport = new DataImport();
-
         dataImport.initSimulation();
         ElevatorSimulation.time = 0;
         try {
@@ -72,8 +70,6 @@ public class Methods {
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("Initialization Done");
-
         File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/request1_result_full.txt");
         try {
             resultFile.createNewFile();
@@ -106,7 +102,6 @@ public class Methods {
             DataImport dataImport = new DataImport();
             dataImport.initSimulation();
             Scanner scanner = new Scanner(f);
-
             // 1. read 1st part parameters
             int userListLen = Integer.parseInt(scanner.nextLine());
             ElevatorSimulation.userCallList = new UserCall[userListLen];
@@ -122,7 +117,6 @@ public class Methods {
                 itemNum++;
             }
             scanner.nextLine();
-
             // 2. read 2nd part parameters
             int confNum = Integer.parseInt(scanner.nextLine());
             int paramNum = 0;
@@ -135,12 +129,8 @@ public class Methods {
                 paramNum += 1;
             }
             scanner.nextLine();
-
-            System.out.println("Finish the two parts.");
-
             // 3. start simulation
             ElevatorSimulation.time = 0;
-
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
