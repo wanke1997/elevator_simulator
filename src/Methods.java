@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import javax.swing.JFrame;
 
@@ -241,6 +244,107 @@ public class Methods {
     }
 
     public static void paramConf() {
+        boolean sign = true;
+        while(sign) {
+            System.out.println("You are in parameter configuration module, please select operations. ");
+            System.out.println("[1] Configure request file directory");
+            System.out.println("[2] Configure simulation file directory");
+            System.out.println("[3] Configure elevator height");
+            System.out.println("[4] Configure delay time");
+            System.out.println("[0] return to main menu");
 
+            Scanner scanner = new Scanner(System.in);
+            int option = Integer.parseInt(scanner.nextLine());
+            System.out.println("Your input: "+option);
+            switch(option) {
+                case 1:
+                    String dir = "";
+                    if(ElevatorSimulation.sysParam.configs.containsKey("UserRequestFilesPath")) {
+                        dir = ElevatorSimulation.sysParam.configs.get("UserRequestFilesPath");
+                    }
+                    System.out.println("The current request file directory is "+dir);
+                    boolean sign2 = true;
+                    while(sign2) {
+                        System.out.println("Please enter a new directory: ");
+                        String newDir = scanner.nextLine();
+                        newDir = newDir.trim().replace("\n", "");
+                        boolean exists = Files.exists(Paths.get(System.getProperty("user.dir")+"/"+newDir));
+                        if(exists) {
+                            ElevatorSimulation.sysParam.configs.replace("UserRequestFilesPath", newDir);
+                            sign2 = false;
+                        } else {
+                            System.out.println("ERROR: directory does not exist");
+                        }
+                    }
+                    break;
+                case 2:
+                    dir = "";
+                    if(ElevatorSimulation.sysParam.configs.containsKey("SimulationFilesPath")) {
+                        dir = ElevatorSimulation.sysParam.configs.get("SimulationFilesPath");
+                    }
+                    System.out.println("The current request file directory is "+dir);
+                    sign2 = true;
+                    while(sign2) {
+                        System.out.println("Please enter a new directory: ");
+                        String newDir = scanner.nextLine();
+                        
+                        newDir = newDir.trim().replace("\n", "");
+                        boolean exists = Files.exists(Paths.get(System.getProperty("user.dir")+"/"+newDir));
+                        if(exists) {
+                            ElevatorSimulation.sysParam.configs.replace("SimulationFilesPath", newDir);
+                            sign2 = false;
+                        } else {
+                            System.out.println("ERROR: directory does not exist");
+                        }
+                    }
+                    break;
+                case 3:
+                    String value = "";
+                    if(ElevatorSimulation.sysParam.configs.containsKey("ElevatorHeight")) {
+                        value = ElevatorSimulation.sysParam.configs.get("ElevatorHeight");
+                    }
+                    System.out.println("The current value is "+value);
+                    sign2 = true;
+                    while(sign2) {
+                        System.out.println("Please enter a new value: ");
+                        String newValue = scanner.nextLine();
+                        try {
+                            int val = Integer.parseInt(newValue);
+                            if(val > 2) {
+                                sign2 = false;
+                                ElevatorSimulation.sysParam.configs.replace("ElevatorHeight", newValue);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("ERROR: Not an Integer");
+                        }
+                    }
+                    break;
+                case 4:
+                    value = "";
+                    if(ElevatorSimulation.sysParam.configs.containsKey("DelayTime")) {
+                        value = ElevatorSimulation.sysParam.configs.get("DelayTime");
+                    }
+                    System.out.println("The current value is "+value);
+                    sign2 = true;
+                    while(sign2) {
+                        System.out.println("Please enter a new value: ");
+                        String newValue = scanner.nextLine();
+                        try {
+                            int val = Integer.parseInt(newValue);
+                            if(val > 0) {
+                                sign2 = false;
+                                ElevatorSimulation.sysParam.configs.replace("DelayTime", newValue);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("ERROR: Not an Integer");
+                        }
+                    }
+                    break;
+                case 0:
+                    sign = false;
+                    scanner.close();
+                    break;
+            }
+        }
     }
 }

@@ -44,7 +44,8 @@ public class ElevatorSimulation {
                 // Methods.silenceSimulate();
                 // Methods.movieSimulate();
                 // Methods.fullSimulate();
-                Methods.historySimulate();
+                // Methods.historySimulate();
+                Methods.paramConf();
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
