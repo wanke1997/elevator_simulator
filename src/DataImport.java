@@ -27,6 +27,7 @@ public class DataImport {
             ElevatorSimulation.userCallList = null;
         }
         ElevatorSimulation.finishCallNum = 0;
+        ElevatorSimulation.responseList.nextIdx = 0;
         initElevator();
     }
 

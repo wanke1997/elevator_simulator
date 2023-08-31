@@ -45,9 +45,9 @@ public class ElevatorSimulation {
                      System.out.println("ERROR: the first argument Integer should be positive");
                 }
                 // showMenu(menuFlag);
-                // silenceSimulate();
-                // movieSimulate();
-                fullSimulate();
+                silenceSimulate();
+                movieSimulate();
+                // fullSimulate();
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -223,7 +223,7 @@ public class ElevatorSimulation {
         DataImport dataImport = new DataImport();
 
         dataImport.initSimulation();
-
+        ElevatorSimulation.time = 0;
         try {
             dataImport.loadUserCallArray(f);
         } catch(FileNotFoundException e) {
@@ -255,7 +255,7 @@ public class ElevatorSimulation {
         DataImport dataImport = new DataImport();
 
         dataImport.initSimulation();
-
+        ElevatorSimulation.time = 0;
         try {
             dataImport.loadUserCallArray(f);
         } catch(FileNotFoundException e) {
