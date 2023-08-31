@@ -22,8 +22,6 @@ public class DrawUI extends JPanel {
                     ResponseCalculate calculator = new ResponseCalculate();
                     calculator.getNextTimeStatus(ElevatorSimulation.elevatorA);
                     calculator.getNextTimeStatus(ElevatorSimulation.elevatorB);
-                    System.out.println("Time: "+ElevatorSimulation.time);
-                    System.out.println("next status: "+ElevatorSimulation.elevatorA.currentFloor+" "+ElevatorSimulation.elevatorB.currentFloor);
                     repaint();
                     ElevatorSimulation.time += 1;
                 } else {

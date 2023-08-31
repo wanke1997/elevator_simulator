@@ -13,7 +13,6 @@ public class ResponseCalculate {
             ElevatorSimulation.responseList.nextIdx += 1;
             ElevatorSimulation.statusChangeFlag = true;
         }
-
         //电梯停止且没有指令，把新指令加到电梯响应队列
         if(elevator.serveList.nodeNum == 0) {
             if(ElevatorSimulation.responseList.nodeNum>0) {
@@ -53,17 +52,14 @@ public class ResponseCalculate {
         } else {
             System.out.println("ERROR: elevator.serveList.nodeNum < 0");
         }
-
         setElevatorState(elevator);
     }
 
     private void findUserCallCanServe(ElevatorState elevator, char rState) {
         if(ElevatorSimulation.responseList.nodeNum==0) return;
-
         int uf = elevator.serveList.head.next.userCall.userFloor;
         char us = elevator.serveList.head.next.userCall.callType;
         char ue = elevator.runState;
-
         ResponseListNode node = ElevatorSimulation.responseList.head.next;
         int m = elevator.currentFloor;
 
@@ -72,7 +68,6 @@ public class ResponseCalculate {
             int f = ElevatorSimulation.userCallList[i].userFloor;
             int t = ElevatorSimulation.userCallList[i].userTarget;
             char s = ElevatorSimulation.userCallList[i].callType;
-
             boolean satisfy = false;
 
             if(us == rState) {
@@ -94,7 +89,6 @@ public class ResponseCalculate {
                 node2.prev.next = node2.next;
                 ElevatorSimulation.responseList.nodeNum -= 1;
                 ElevatorSimulation.statusChangeFlag = true;
-
                 // add a node for serveList
                 char serveState = (f==m)?'E':'P';
                 ServeListNode serveNode = new ServeListNode(serveState, ElevatorSimulation.userCallList[node2.userCallIdx], node2.userCallIdx);

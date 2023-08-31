@@ -91,7 +91,6 @@ public class ScreenSimulation {
             node2 = node2.next;
         }
 
-
         // elevator A & B
         int elevatorAHeight = ElevatorSimulation.elevatorA.currentFloor;
         int elevatorBHeight = ElevatorSimulation.elevatorB.currentFloor;
@@ -113,7 +112,6 @@ public class ScreenSimulation {
         else if(ch=='P') return "waiting";
         else if(ch=='E') return "serving";
         else if(ch=='N') return "N/A";
-
         return "";
     }
 }
