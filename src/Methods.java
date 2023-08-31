@@ -9,88 +9,153 @@ import javax.swing.JFrame;
 
 public class Methods {
     public static void silenceSimulate() {
-        // TODO: 后续需要补充完整逻辑
-        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
-        System.out.println(f.getAbsolutePath());
-        DataImport dataImport = new DataImport();
-        DataExport dataExport = new DataExport();
-        
-        dataImport.initSimulation();
-
-        try {
-            dataImport.loadUserCallArray(f);
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
+        boolean sign = true;
+        while(sign) {
+            System.out.println("You are in silence simulation module, please select operations. ");
+            System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
+            Scanner input = new Scanner(System.in);
+            int option = input.nextInt();
+            if(option == 1) {
+                System.out.println("Please enter the file name, including the extension name");
+                Scanner input2 = new Scanner(System.in);
+                String fileName = input2.nextLine();
+                File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
+                System.out.println(f.getAbsolutePath());
+                DataImport dataImport = new DataImport();
+                DataExport dataExport = new DataExport();
+                
+                dataImport.initSimulation();
+                try {
+                    dataImport.loadUserCallArray(f);
+                } catch(FileNotFoundException e) {
+                    System.out.println("File not found, please try again.");
+                    input.close();
+                    e.printStackTrace();
+                }
+                int res = dataExport.outputSimulationResult(fileName);
+                if(res == 1) {
+                    input.close();
+                    input2.close();
+                    sign = false;
+                } else if(res == 0) {
+                    System.out.println("Simulation failed");
+                }
+            } else if(option == 0) {
+                input.close();
+                sign = false;
+                return;
+            } else {
+                System.out.println("ERROR: invalid number, please try again");
+            }
         }
-        
-        dataExport.outputSimulationResult();
     }
 
     public static void movieSimulate() {
-        // TODO: 根据流程图补全流程
-        System.out.println("movieSimulate() function");
-        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
-        System.out.println(f.getAbsolutePath());
-        DataImport dataImport = new DataImport();
+        boolean sign = true;
+        while(sign) {
+            System.out.println("You are in movie simulation module, please select operations. ");
+            System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
+            Scanner input = new Scanner(System.in);
+            int option = input.nextInt();
 
-        dataImport.initSimulation();
-        ElevatorSimulation.time = 0;
-        try {
-            dataImport.loadUserCallArray(f);
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            if(option == 1) {
+                System.out.println("Please enter the file name, including the extension name");
+                Scanner input2 = new Scanner(System.in);
+                String fileName = input2.nextLine();
+                File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
+                System.out.println(f.getAbsolutePath());
 
-        System.out.println("Initialization Done");
-
-        // call animation to print
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame("Movie Simulation");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                MovieUI ui = new MovieUI();
-                frame.add(ui);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+                DataImport dataImport = new DataImport();
+                dataImport.initSimulation();
+                ElevatorSimulation.time = 0;
+                try {
+                    dataImport.loadUserCallArray(f);
+                } catch(FileNotFoundException e) {
+                    System.out.println("File not found, please try again.");
+                    input.close();
+                    e.printStackTrace();
+                }
+                input.close();
+                input2.close();
+                sign = false;
+                // call animation to print
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JFrame frame = new JFrame("Movie Simulation");
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        MovieUI ui = new MovieUI();
+                        frame.add(ui);
+                        frame.pack();
+                        frame.setLocationRelativeTo(null);
+                        frame.setVisible(true);
+                    }
+                });
+            } else if(option == 0) {
+                input.close();
+                sign = false;
+                return;
             }
-        });
+        }        
     }
 
     public static void fullSimulate() {
-        // TODO: 根据流程图补全流程
-        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
-        System.out.println(f.getAbsolutePath());
-        DataImport dataImport = new DataImport();
-        dataImport.initSimulation();
-        ElevatorSimulation.time = 0;
-        try {
-            dataImport.loadUserCallArray(f);
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/request1_result_full.txt");
-        try {
-            resultFile.createNewFile();
-            FileWriter writer = new FileWriter(resultFile);
-            new DataExport().importUserCall(writer);
-            new DataExport().importSimulateParam(writer);
-            writer.close();
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JFrame frame = new JFrame("Full Simulation");
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    FullUI ui = new FullUI(resultFile.getAbsolutePath());
-                    frame.add(ui);
-                    frame.pack();
-                    frame.setLocationRelativeTo(null);
-                    frame.setVisible(true);
+        boolean sign = true;
+        while(sign) {
+            System.out.println("You are in movie simulation module, please select operations. ");
+            System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
+            Scanner input = new Scanner(System.in);
+            int option = input.nextInt();
+
+            if(option == 1) {
+                System.out.println("Please enter the file name, including the extension name");
+                Scanner input2 = new Scanner(System.in);
+                String fileName = input2.nextLine();
+                File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
+                System.out.println(f.getAbsolutePath());
+
+                DataImport dataImport = new DataImport();
+
+                dataImport.initSimulation();
+                ElevatorSimulation.time = 0;
+                try {
+                    dataImport.loadUserCallArray(f);
+                } catch(FileNotFoundException e) {
+                    System.out.println("File not found, please try again.");
+                    input.close();
+                    e.printStackTrace();
                 }
-            });
-        } catch(IOException e) {
-            e.printStackTrace();
+                File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/"+fileName.substring(0, fileName.length()-4)+"_full.txt");
+                try {
+                    resultFile.createNewFile();
+                    FileWriter writer = new FileWriter(resultFile);
+                    new DataExport().importUserCall(writer);
+                    new DataExport().importSimulateParam(writer);
+                    writer.close();
+
+                    input.close();
+                    input2.close();
+                    sign = false;
+                    EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            JFrame frame = new JFrame("Full Simulation");
+                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            FullUI ui = new FullUI(resultFile.getAbsolutePath());
+                            frame.add(ui);
+                            frame.pack();
+                            frame.setLocationRelativeTo(null);
+                            frame.setVisible(true);
+                        }
+                    });
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(option == 0) {
+                input.close();
+                sign = false;
+                return;
+            }
         }
     }
 

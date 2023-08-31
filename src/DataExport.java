@@ -3,9 +3,9 @@ import java.io.IOException;
 import java.io.FileWriter;
 
 public class DataExport {
-    public int outputSimulationResult() {
+    public int outputSimulationResult(String fileName) {
         // TODO: 遵循流程图补充完整
-        File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/request1_result.txt");
+        File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/"+fileName.substring(0, fileName.length()-4)+"_result.txt");
         ResponseCalculate calculator = new ResponseCalculate();
 
         try {
