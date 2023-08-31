@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-
 import javax.swing.JFrame;
 
 public class Methods {
@@ -95,6 +94,8 @@ public class Methods {
                 input.close();
                 sign = false;
                 return;
+            } else {
+                System.out.println("ERROR: invalid number, please try again");
             }
         }        
     }
@@ -155,61 +156,87 @@ public class Methods {
                 input.close();
                 sign = false;
                 return;
+            } else {
+                System.out.println("ERROR: invalid number, please try again");
             }
         }
     }
 
     public static void historySimulate() {
-        try {
-            System.out.println("historySimulate() function");
-            File f = new File(System.getProperty("user.dir")+"/SimulationFiles/request1_result.txt");
-            System.out.println(f.getAbsolutePath());
-            DataImport dataImport = new DataImport();
-            dataImport.initSimulation();
-            Scanner scanner = new Scanner(f);
-            // 1. read 1st part parameters
-            int userListLen = Integer.parseInt(scanner.nextLine());
-            ElevatorSimulation.userCallList = new UserCall[userListLen];
-            int itemNum = 0;
-            while(itemNum<userListLen) {
-                String s = scanner.nextLine();
-                String[] strs = s.split(",");
-                int userFloor = Integer.parseInt(strs[0]);
-                int userTarget = Integer.parseInt(strs[1]);
-                int callTime = Integer.parseInt(strs[2]);
-                char callType = (userTarget>userFloor)?'U':'D';
-                ElevatorSimulation.userCallList[itemNum] = new UserCall(userFloor, userTarget, callTime, callType);
-                itemNum++;
-            }
-            scanner.nextLine();
-            // 2. read 2nd part parameters
-            int confNum = Integer.parseInt(scanner.nextLine());
-            int paramNum = 0;
-            while(paramNum<confNum) {
-                String s = scanner.nextLine();
-                String[] strs = s.split("=");
-                if(strs[0].equals("ElevatorHeight") || strs[0].equals("SimulateSpeed") || strs[0].equals("ElevatorSpeed")) {
-                    ElevatorSimulation.sysParam.configs.replace(strs[0], strs[1]);
+        boolean sign = true;
+        while(sign) {
+            System.out.println("You are in movie simulation module, please select operations. ");
+            System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
+            Scanner input = new Scanner(System.in);
+            int option = input.nextInt();
+            if(option == 1) {
+                try {
+                    System.out.println("Please enter the file name, including the extension name");
+                    Scanner input2 = new Scanner(System.in);
+                    String fileName = input2.nextLine();
+                    File f = new File(System.getProperty("user.dir")+"/SimulationFiles/"+fileName);
+                    System.out.println(f.getAbsolutePath());
+
+                    DataImport dataImport = new DataImport();
+                    dataImport.initSimulation();
+                    Scanner scanner = new Scanner(f);
+                    // 1. read 1st part parameters
+                    int userListLen = Integer.parseInt(scanner.nextLine());
+                    ElevatorSimulation.userCallList = new UserCall[userListLen];
+                    int itemNum = 0;
+                    while(itemNum<userListLen) {
+                        String s = scanner.nextLine();
+                        String[] strs = s.split(",");
+                        int userFloor = Integer.parseInt(strs[0]);
+                        int userTarget = Integer.parseInt(strs[1]);
+                        int callTime = Integer.parseInt(strs[2]);
+                        char callType = (userTarget>userFloor)?'U':'D';
+                        ElevatorSimulation.userCallList[itemNum] = new UserCall(userFloor, userTarget, callTime, callType);
+                        itemNum++;
+                    }
+                    scanner.nextLine();
+                    // 2. read 2nd part parameters
+                    int confNum = Integer.parseInt(scanner.nextLine());
+                    int paramNum = 0;
+                    while(paramNum<confNum) {
+                        String s = scanner.nextLine();
+                        String[] strs = s.split("=");
+                        if(strs[0].equals("ElevatorHeight") || strs[0].equals("SimulateSpeed") || strs[0].equals("ElevatorSpeed")) {
+                            ElevatorSimulation.sysParam.configs.replace(strs[0], strs[1]);
+                        }
+                        paramNum += 1;
+                    }
+                    scanner.nextLine();
+                    // 3. start simulation
+                    ElevatorSimulation.time = 0;
+                    input.close();
+                    input2.close();
+                    sign = false;
+                    EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            JFrame frame = new JFrame("History Simulation");
+                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            HistoryUI ui = new HistoryUI(scanner);
+                            frame.add(ui);
+                            frame.pack();
+                            frame.setLocationRelativeTo(null);
+                            frame.setVisible(true);
+                        }
+                    });
+                } catch(FileNotFoundException e) {
+                    System.out.println("File not found, please try again.");
+                    input.close();
+                    e.printStackTrace();
                 }
-                paramNum += 1;
+
+            } else if(option == 0) {
+                input.close();
+                sign = false;
+                return;
+            } else {
+                System.out.println("ERROR: invalid number, please try again");
             }
-            scanner.nextLine();
-            // 3. start simulation
-            ElevatorSimulation.time = 0;
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JFrame frame = new JFrame("History Simulation");
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    HistoryUI ui = new HistoryUI(scanner);
-                    frame.add(ui);
-                    frame.pack();
-                    frame.setLocationRelativeTo(null);
-                    frame.setVisible(true);
-                }
-            });
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 

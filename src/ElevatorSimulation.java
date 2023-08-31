@@ -43,8 +43,8 @@ public class ElevatorSimulation {
                 showMenu(menuFlag);
                 // Methods.silenceSimulate();
                 // Methods.movieSimulate();
-                Methods.fullSimulate();
-                // Methods.historySimulate();
+                // Methods.fullSimulate();
+                Methods.historySimulate();
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
