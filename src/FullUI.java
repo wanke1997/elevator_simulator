@@ -37,28 +37,7 @@ public class FullUI extends JPanel {
                         calculator.getNextTimeStatus(ElevatorSimulation.elevatorA);
                         calculator.getNextTimeStatus(ElevatorSimulation.elevatorB);
                         if(ElevatorSimulation.statusChangeFlag) {
-                            String firstOutput = ElevatorSimulation.time+",A,"+ElevatorSimulation.elevatorA.currentFloor+","+ElevatorSimulation.elevatorA.runState+",B,"+ElevatorSimulation.elevatorB.currentFloor+","+ElevatorSimulation.elevatorB.runState+";";
-                            writer.write(firstOutput);
-                            
-                            ServeListNode p = ElevatorSimulation.elevatorA.serveList.head.next;
-                            while(p!=ElevatorSimulation.elevatorA.serveList.tail) {
-                                String s = "<"+(p.userCallIdx+1)+","+p.userCall.userFloor+","+p.userCall.userTarget+","+p.serveState+","+"A>";
-                                writer.write(s+",");
-                                p = p.next;
-                            }
-                            p = ElevatorSimulation.elevatorB.serveList.head.next;
-                            while(p!=ElevatorSimulation.elevatorB.serveList.tail) {
-                                String s = "<"+(p.userCallIdx+1)+","+p.userCall.userFloor+","+p.userCall.userTarget+","+p.serveState+","+"B>";
-                                writer.write(s+",");
-                                p = p.next;
-                            }
-                            ResponseListNode pp = ElevatorSimulation.responseList.head.next;
-                            while(pp!=ElevatorSimulation.responseList.tail) {
-                                String s = "<"+(pp.userCallIdx+1)+","+ElevatorSimulation.userCallList[pp.userCallIdx].userFloor+","+ElevatorSimulation.userCallList[pp.userCallIdx].userTarget+","+"N,N>";
-                                writer.write(s+",");
-                                pp = pp.next;
-                            }
-                            writer.write("\n");
+                            new DataExport().importSimulateRequests(writer);
                         }
                         writer.close();
                         repaint();
