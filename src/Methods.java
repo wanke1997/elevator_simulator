@@ -100,7 +100,7 @@ public class Methods {
 
     public static void historySimulate() {
         try {
-            System.out.println("fullSimulate() function");
+            System.out.println("historySimulate() function");
             File f = new File(System.getProperty("user.dir")+"/SimulationFiles/request1_result.txt");
             System.out.println(f.getAbsolutePath());
             DataImport dataImport = new DataImport();

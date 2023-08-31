@@ -2,7 +2,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.JPanel;
@@ -12,11 +11,11 @@ public class HistoryUI extends JPanel {
     private int elevatorHeight;
     private int panelHeight;
     private int panelWidth;
-    private int ct;
+    private int nextCT;
     private String s;
  
     public HistoryUI(Scanner scanner) {
-        ct = 0;
+        nextCT = 1;
         elevatorHeight = Integer.parseInt(ElevatorSimulation.sysParam.configs.get("ElevatorHeight"));
         panelWidth = 25*elevatorHeight+450;
         panelHeight = 50*elevatorHeight+160;
@@ -32,13 +31,13 @@ public class HistoryUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // detailed operations
-                if(ElevatorSimulation.time < ct) {
+                if(ElevatorSimulation.time < nextCT-1) {
                     setState();
-                } else if(ElevatorSimulation.time == ct) {
+                } else if(ElevatorSimulation.time == nextCT-1) {
                     readState(s);
                     if(scanner.hasNextLine()) {
                         s = scanner.nextLine();
-                        ct = readNextTime(s);
+                        nextCT = readNextTime(s);
                     }
                 } else {
                     return;
@@ -77,14 +76,14 @@ public class HistoryUI extends JPanel {
             if(i==0) {
                 // 1. set the state of elevators
                 String[] str2 = str1[i].split("\\s*,\\s*");
-                ct = Integer.parseInt(str2[0]);
+                nextCT = Integer.parseInt(str2[0]);
                 ElevatorSimulation.elevatorA.currentFloor = Integer.parseInt(str2[2]);
                 ElevatorSimulation.elevatorA.runState = str2[3].charAt(0);
                 ElevatorSimulation.elevatorB.currentFloor = Integer.parseInt(str2[5]);
                 ElevatorSimulation.elevatorB.runState = str2[6].charAt(0);
             } else {
                 // 2. set the ServeListNode and ResponseListNode
-                String[] str2 = str1[i].substring(1, str1[i].length()-1).split(",");
+                String[] str2 = str1[i].substring(1, str1[i].length()-1).split("\\s*,\\s*");
                 int idx = Integer.parseInt(str2[0])-1;
                 if(str2[4].equals("A")) {
                     UserCall userCall = ElevatorSimulation.userCallList[idx];
