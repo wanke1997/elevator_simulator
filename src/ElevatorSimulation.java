@@ -1,10 +1,6 @@
-import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
-import javax.swing.JFrame;
 
 public class ElevatorSimulation {
     // 两部电梯
@@ -44,10 +40,11 @@ public class ElevatorSimulation {
                 if(menuFlag<0) {
                      System.out.println("ERROR: the first argument Integer should be positive");
                 }
-                // showMenu(menuFlag);
-                silenceSimulate();
-                movieSimulate();
-                // fullSimulate();
+                showMenu(menuFlag);
+                // Methods.silenceSimulate();
+                // Methods.movieSimulate();
+                // Methods.fullSimulate();
+                Methods.historySimulate();
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -195,103 +192,5 @@ public class ElevatorSimulation {
                 // other options
                 break;
         }
-    }
-
-    public static void silenceSimulate() {
-        // TODO: 后续需要补充完整逻辑
-        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
-        System.out.println(f.getAbsolutePath());
-        DataImport dataImport = new DataImport();
-        DataExport dataExport = new DataExport();
-        
-        dataImport.initSimulation();
-
-        try {
-            dataImport.loadUserCallArray(f);
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        
-        dataExport.outputSimulationResult();
-    }
-
-    public static void movieSimulate() {
-        // TODO: 根据流程图补全流程
-        System.out.println("movieSimulate() function");
-        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
-        System.out.println(f.getAbsolutePath());
-        DataImport dataImport = new DataImport();
-
-        dataImport.initSimulation();
-        ElevatorSimulation.time = 0;
-        try {
-            dataImport.loadUserCallArray(f);
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Initialization Done");
-
-        // call animation to print
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame("Movie Simulation");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                MovieUI ui = new MovieUI();
-                frame.add(ui);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
-    }
-
-    public static void fullSimulate() {
-        // TODO: 根据流程图补全流程
-        System.out.println("movieSimulate() function");
-        File f = new File(System.getProperty("user.dir")+"/UserRequests/request1.txt");
-        System.out.println(f.getAbsolutePath());
-        DataImport dataImport = new DataImport();
-
-        dataImport.initSimulation();
-        ElevatorSimulation.time = 0;
-        try {
-            dataImport.loadUserCallArray(f);
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Initialization Done");
-
-        File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/request1_result_full.txt");
-        try {
-            resultFile.createNewFile();
-            FileWriter writer = new FileWriter(resultFile);
-            new DataExport().importUserCall(writer);
-            new DataExport().importSimulateParam(writer);
-            writer.close();
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JFrame frame = new JFrame("Full Simulation");
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    FullUI ui = new FullUI(resultFile.getAbsolutePath());
-                    frame.add(ui);
-                    frame.pack();
-                    frame.setLocationRelativeTo(null);
-                    frame.setVisible(true);
-                }
-            });
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void historySimulate() {
-
-    }
-
-    public static void paramConf() {
-
     }
 }

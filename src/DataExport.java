@@ -62,19 +62,19 @@ public class DataExport {
         ServeListNode p = ElevatorSimulation.elevatorA.serveList.head.next;
         while(p!=ElevatorSimulation.elevatorA.serveList.tail) {
             String s = "<"+(p.userCallIdx+1)+","+p.userCall.userFloor+","+p.userCall.userTarget+","+p.serveState+","+"A>";
-            writer.write(s+",");
+            writer.write(s+";");
             p = p.next;
         }
         p = ElevatorSimulation.elevatorB.serveList.head.next;
         while(p!=ElevatorSimulation.elevatorB.serveList.tail) {
             String s = "<"+(p.userCallIdx+1)+","+p.userCall.userFloor+","+p.userCall.userTarget+","+p.serveState+","+"B>";
-            writer.write(s+",");
+            writer.write(s+";");
             p = p.next;
         }
         ResponseListNode pp = ElevatorSimulation.responseList.head.next;
         while(pp!=ElevatorSimulation.responseList.tail) {
             String s = "<"+(pp.userCallIdx+1)+","+ElevatorSimulation.userCallList[pp.userCallIdx].userFloor+","+ElevatorSimulation.userCallList[pp.userCallIdx].userTarget+","+"N,N>";
-            writer.write(s+",");
+            writer.write(s+";");
             pp = pp.next;
         }
         writer.write("\n");
