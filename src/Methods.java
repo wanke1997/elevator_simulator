@@ -103,7 +103,7 @@ public class Methods {
     public static void fullSimulate() {
         boolean sign = true;
         while(sign) {
-            System.out.println("You are in movie simulation module, please select operations. ");
+            System.out.println("You are in full simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
             Scanner input = new Scanner(System.in);
             int option = input.nextInt();
@@ -165,7 +165,7 @@ public class Methods {
     public static void historySimulate() {
         boolean sign = true;
         while(sign) {
-            System.out.println("You are in movie simulation module, please select operations. ");
+            System.out.println("You are in history simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
             Scanner input = new Scanner(System.in);
             int option = input.nextInt();
