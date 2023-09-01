@@ -73,7 +73,7 @@ public class Methods {
                     @Override
                     public void run() {
                         JFrame frame = new JFrame("Movie Simulation");
-                        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         MovieUI ui = new MovieUI();
                         frame.add(ui);
                         frame.pack();
@@ -125,7 +125,7 @@ public class Methods {
                         @Override
                         public void run() {
                             JFrame frame = new JFrame("Full Simulation");
-                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             FullUI ui = new FullUI(resultFile.getAbsolutePath());
                             frame.add(ui);
                             frame.pack();
@@ -195,7 +195,7 @@ public class Methods {
                         @Override
                         public void run() {
                             JFrame frame = new JFrame("History Simulation");
-                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             HistoryUI ui = new HistoryUI(scanner);
                             frame.add(ui);
                             frame.pack();
