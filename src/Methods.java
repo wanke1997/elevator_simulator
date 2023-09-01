@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import javax.swing.JFrame;
@@ -15,12 +14,10 @@ public class Methods {
         while(sign) {
             System.out.println("You are in silence simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
-            Scanner input = new Scanner(System.in);
-            int option = input.nextInt();
+            int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
             if(option == 1) {
                 System.out.println("Please enter the file name, including the extension name");
-                Scanner input2 = new Scanner(System.in);
-                String fileName = input2.nextLine();
+                String fileName = ElevatorSimulation.inputScanner.nextLine();
                 File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
                 System.out.println(f.getAbsolutePath());
                 DataImport dataImport = new DataImport();
@@ -31,19 +28,15 @@ public class Methods {
                     dataImport.loadUserCallArray(f);
                 } catch(FileNotFoundException e) {
                     System.out.println("File not found, please try again.");
-                    input.close();
                     e.printStackTrace();
                 }
                 int res = dataExport.outputSimulationResult(fileName);
                 if(res == 1) {
-                    input.close();
-                    input2.close();
                     sign = false;
                 } else if(res == 0) {
                     System.out.println("Simulation failed");
                 }
             } else if(option == 0) {
-                input.close();
                 sign = false;
                 return;
             } else {
@@ -57,13 +50,11 @@ public class Methods {
         while(sign) {
             System.out.println("You are in movie simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
-            Scanner input = new Scanner(System.in);
-            int option = input.nextInt();
+            int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
 
             if(option == 1) {
                 System.out.println("Please enter the file name, including the extension name");
-                Scanner input2 = new Scanner(System.in);
-                String fileName = input2.nextLine();
+                String fileName = ElevatorSimulation.inputScanner.nextLine();
                 File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
                 System.out.println(f.getAbsolutePath());
 
@@ -74,18 +65,15 @@ public class Methods {
                     dataImport.loadUserCallArray(f);
                 } catch(FileNotFoundException e) {
                     System.out.println("File not found, please try again.");
-                    input.close();
                     e.printStackTrace();
                 }
-                input.close();
-                input2.close();
                 sign = false;
                 // call animation to print
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         JFrame frame = new JFrame("Movie Simulation");
-                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         MovieUI ui = new MovieUI();
                         frame.add(ui);
                         frame.pack();
@@ -94,7 +82,6 @@ public class Methods {
                     }
                 });
             } else if(option == 0) {
-                input.close();
                 sign = false;
                 return;
             } else {
@@ -108,13 +95,11 @@ public class Methods {
         while(sign) {
             System.out.println("You are in full simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
-            Scanner input = new Scanner(System.in);
-            int option = input.nextInt();
+            int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
 
             if(option == 1) {
                 System.out.println("Please enter the file name, including the extension name");
-                Scanner input2 = new Scanner(System.in);
-                String fileName = input2.nextLine();
+                String fileName = ElevatorSimulation.inputScanner.nextLine();
                 File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
                 System.out.println(f.getAbsolutePath());
 
@@ -126,7 +111,6 @@ public class Methods {
                     dataImport.loadUserCallArray(f);
                 } catch(FileNotFoundException e) {
                     System.out.println("File not found, please try again.");
-                    input.close();
                     e.printStackTrace();
                 }
                 File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/"+fileName.substring(0, fileName.length()-4)+"_full.txt");
@@ -136,15 +120,12 @@ public class Methods {
                     new DataExport().importUserCall(writer);
                     new DataExport().importSimulateParam(writer);
                     writer.close();
-
-                    input.close();
-                    input2.close();
                     sign = false;
                     EventQueue.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             JFrame frame = new JFrame("Full Simulation");
-                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             FullUI ui = new FullUI(resultFile.getAbsolutePath());
                             frame.add(ui);
                             frame.pack();
@@ -156,7 +137,6 @@ public class Methods {
                     e.printStackTrace();
                 }
             } else if(option == 0) {
-                input.close();
                 sign = false;
                 return;
             } else {
@@ -170,13 +150,11 @@ public class Methods {
         while(sign) {
             System.out.println("You are in history simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
-            Scanner input = new Scanner(System.in);
-            int option = input.nextInt();
+            int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
             if(option == 1) {
                 try {
                     System.out.println("Please enter the file name, including the extension name");
-                    Scanner input2 = new Scanner(System.in);
-                    String fileName = input2.nextLine();
+                    String fileName = ElevatorSimulation.inputScanner.nextLine();
                     File f = new File(System.getProperty("user.dir")+"/SimulationFiles/"+fileName);
                     System.out.println(f.getAbsolutePath());
 
@@ -212,14 +190,12 @@ public class Methods {
                     scanner.nextLine();
                     // 3. start simulation
                     ElevatorSimulation.time = 0;
-                    input.close();
-                    input2.close();
                     sign = false;
                     EventQueue.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             JFrame frame = new JFrame("History Simulation");
-                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                             HistoryUI ui = new HistoryUI(scanner);
                             frame.add(ui);
                             frame.pack();
@@ -229,12 +205,10 @@ public class Methods {
                     });
                 } catch(FileNotFoundException e) {
                     System.out.println("File not found, please try again.");
-                    input.close();
                     e.printStackTrace();
                 }
 
             } else if(option == 0) {
-                input.close();
                 sign = false;
                 return;
             } else {
@@ -253,8 +227,7 @@ public class Methods {
             System.out.println("[4] Configure delay time");
             System.out.println("[0] return to main menu");
 
-            Scanner scanner = new Scanner(System.in);
-            int option = Integer.parseInt(scanner.nextLine());
+            int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
             System.out.println("Your input: "+option);
             switch(option) {
                 case 1:
@@ -266,7 +239,7 @@ public class Methods {
                     boolean sign2 = true;
                     while(sign2) {
                         System.out.println("Please enter a new directory: ");
-                        String newDir = scanner.nextLine();
+                        String newDir = ElevatorSimulation.inputScanner.nextLine();
                         newDir = newDir.trim().replace("\n", "");
                         boolean exists = Files.exists(Paths.get(System.getProperty("user.dir")+"/"+newDir));
                         if(exists) {
@@ -286,7 +259,7 @@ public class Methods {
                     sign2 = true;
                     while(sign2) {
                         System.out.println("Please enter a new directory: ");
-                        String newDir = scanner.nextLine();
+                        String newDir = ElevatorSimulation.inputScanner.nextLine();
                         
                         newDir = newDir.trim().replace("\n", "");
                         boolean exists = Files.exists(Paths.get(System.getProperty("user.dir")+"/"+newDir));
@@ -307,7 +280,7 @@ public class Methods {
                     sign2 = true;
                     while(sign2) {
                         System.out.println("Please enter a new value: ");
-                        String newValue = scanner.nextLine();
+                        String newValue = ElevatorSimulation.inputScanner.nextLine();
                         try {
                             int val = Integer.parseInt(newValue);
                             if(val > 2) {
@@ -328,7 +301,7 @@ public class Methods {
                     sign2 = true;
                     while(sign2) {
                         System.out.println("Please enter a new value: ");
-                        String newValue = scanner.nextLine();
+                        String newValue = ElevatorSimulation.inputScanner.nextLine();
                         try {
                             int val = Integer.parseInt(newValue);
                             if(val > 0) {
@@ -342,7 +315,6 @@ public class Methods {
                     break;
                 case 0:
                     sign = false;
-                    scanner.close();
                     break;
             }
         }

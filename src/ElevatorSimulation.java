@@ -18,35 +18,18 @@ public class ElevatorSimulation {
     public static ResponseListHeadNode responseList;
     // 用户指令数组
     public static UserCall[] userCallList;
-
+    public static Scanner inputScanner;
     public static void main(String[] args) {
-        // TODO: add args to the program
         try {
+            inputScanner = new Scanner(System.in);
             int param = systemInit();
             if(param!=1) {
                 System.out.println("ERROR: return with code "+param);
             } else {
                 System.out.println("Initialization succeeded!");
-                // if (args.length == 0) {
-                //     System.out.println("usage: you should add at least 1 parameter for a command.");
-                // }
-                // try {
-                //     Integer.parseInt(args[0]);
-                // } catch (NumberFormatException e) {
-                //     System.out.println("ERROR: the first argument should be an Integer to indicate an option");
-                // }
-                // int menuFlag = Integer.parseInt(args[0]);
-                int menuFlag = 0;
-                if(menuFlag<0) {
-                     System.out.println("ERROR: the first argument Integer should be positive");
-                }
-                showMenu(menuFlag);
-                // Methods.silenceSimulate();
-                // Methods.movieSimulate();
-                // Methods.fullSimulate();
-                // Methods.historySimulate();
-                Methods.paramConf();
+                showMenu();
             }
+            inputScanner.close();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -163,35 +146,51 @@ public class ElevatorSimulation {
         return checkResult;
     }
 
-    public static void showMenu(int menuFlag) {
-        // TODO: finish showMenu function
-        switch (menuFlag) {
-            case 1:
-                System.out.println("option 1");
-                // silence simulation
-                break;
-            case 2:
-                System.out.println("option 2");
-                // animation simulation 
-                break;
-            case 3:
-                System.out.println("option 3");
-                // comprehensive simulation
-                break;
-            case 4:
-                System.out.println("option 4");
-                // replay
-                break;
-            case 5:
-                System.out.println("option 5");
-                // configuration settings
-                break;
-            case 0:
-                System.out.println("Now exit");
-                break;
-            default:
-                // other options
-                break;
+    public static void showMenu() {
+        boolean sign = true;
+        while(sign) {
+            System.out.println("The program is an elevator simulator. Please select the function that you want. ");
+            System.out.println("[1] Silence simulation");
+            System.out.println("[2] Movie simulation (only execute once)");
+            System.out.println("[3] Full simulation (only execute once)");
+            System.out.println("[4] History replay (only execute once)");
+            System.out.println("[5] Modify system configuration");
+            System.out.println("[0] Exit the simulator");
+            System.out.println("Now enter your option: ");
+
+            int menuFlag = Integer.parseInt(inputScanner.nextLine());
+            switch (menuFlag) {
+                case 1:
+                    System.out.println("Welcome to silence simulation");
+                    Methods.silenceSimulate();
+                    break;
+                case 2:
+                    System.out.println("Welcome to movie simulation");
+                    Methods.movieSimulate();
+                    sign = false;
+                    break;
+                case 3:
+                    System.out.println("Welcome to full simulation");
+                    Methods.fullSimulate();
+                    sign = false;
+                    break;
+                case 4:
+                    System.out.println("Welcome to history replay");
+                    Methods.historySimulate();
+                    sign = false;
+                    break;
+                case 5:
+                    System.out.println("Welcome to system configuration modification");
+                    Methods.paramConf();
+                    break;
+                case 0:
+                    System.out.println("Now exit, have a good day");
+                    sign = false;
+                    break;
+                default:
+                    // other options
+                    break;
+            }
         }
     }
 }
