@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
-
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -23,10 +22,8 @@ public class HistoryUI extends JPanel {
         if(ElevatorSimulation.sysParam.configs.containsKey("DelayTime")) {
             delayTime = Integer.parseInt(ElevatorSimulation.sysParam.configs.get("DelayTime"));
         }
-
         // read time=0 state
         s = scanner.nextLine();
-
         Timer timer = new Timer(delayTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,7 +122,6 @@ public class HistoryUI extends JPanel {
             ElevatorSimulation.elevatorA.currentFloor -= 1;
         }
         // set elevator B
-        
         state = ElevatorSimulation.elevatorB.runState;
         if(state == 'U') {
             ElevatorSimulation.elevatorB.currentFloor += 1;

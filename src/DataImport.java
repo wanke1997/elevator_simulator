@@ -3,16 +3,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class DataImport {
-    // public static void main(String[] args) {
-    //     try {
-    //         DataImport example = new DataImport();
-    //         File f = new File("/mnt/c/Users/kwan/github/elevator_simulator/UserRequests/request1.txt");
-    //         example.loadUserCallArray(f);
-    //     } catch(FileNotFoundException e) {
-
-    //     }
-    // }
-
     public void initSimulation() {
         if(ElevatorSimulation.responseList==null) {
             ElevatorSimulation.responseList = new ResponseListHeadNode();
@@ -39,7 +29,6 @@ public class DataImport {
             ElevatorSimulation.elevatorA.runState = 'S';
             ElevatorSimulation.elevatorA.serveList = new ServeListHeadNode();
         }
-        
         if(ElevatorSimulation.elevatorB==null) {
             ElevatorSimulation.elevatorB = new ElevatorState(1, 'S');
         } else {

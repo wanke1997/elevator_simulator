@@ -35,7 +35,6 @@ public class ResponseCalculate {
                 serveNode.next = elevator.serveList.tail;
                 elevator.serveList.tail.prev = serveNode;
                 elevator.serveList.nodeNum += 1;
-                
                 char nextRunState = getElevatorDirection(elevator);
                 findUserCallCanServe(elevator, nextRunState);
             } 
@@ -62,14 +61,12 @@ public class ResponseCalculate {
         char ue = elevator.runState;
         ResponseListNode node = ElevatorSimulation.responseList.head.next;
         int m = elevator.currentFloor;
-
         while(node!=ElevatorSimulation.responseList.tail) {
             int i = node.userCallIdx;
             int f = ElevatorSimulation.userCallList[i].userFloor;
             int t = ElevatorSimulation.userCallList[i].userTarget;
             char s = ElevatorSimulation.userCallList[i].callType;
             boolean satisfy = false;
-
             if(us == rState) {
                 if(rState=='U'&&s=='U'&&f>m || rState=='D'&&s=='D'&&f<m || ue=='S'&&f==m) {
                     satisfy = true;
@@ -80,7 +77,6 @@ public class ResponseCalculate {
                         satisfy = true;
                     }
             }
-
             if(satisfy) {
                 // delete a node
                 ResponseListNode node2 = node;
@@ -134,14 +130,12 @@ public class ResponseCalculate {
         int m = elevator.currentFloor;
         char eRs = elevator.runState;
         int stepFlag = 0;
-
         if(elevator.serveList.nodeNum != 0) {
             ServeListNode p = elevator.serveList.head.next;
             while(p!=elevator.serveList.tail) {
                 int f = p.userCall.userFloor;
                 int t = p.userCall.userTarget;
                 char s = p.serveState;
-
                 if(eRs=='U') {
                     stepFlag = 1;
                     if(s=='E'&&t==m+1) {
@@ -153,7 +147,6 @@ public class ResponseCalculate {
                         pp.prev.next = pp.next;
                         pp.next.prev = pp.prev;
                         elevator.serveList.nodeNum -= 1;
-
                         ElevatorSimulation.finishCallNum += 1;
                     } else {
                         if(s=='P'&&f==m+1) {
@@ -176,7 +169,6 @@ public class ResponseCalculate {
                         pp.prev.next = pp.next;
                         pp.next.prev = pp.prev;
                         elevator.serveList.nodeNum -= 1;
-
                         ElevatorSimulation.finishCallNum += 1;
                     } else {
                         if(s=='P'&&f==m-1) {

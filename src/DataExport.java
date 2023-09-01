@@ -6,7 +6,6 @@ public class DataExport {
     public int outputSimulationResult(String fileName) {
         File resultFile = new File(System.getProperty("user.dir")+"/SimulationFiles/"+fileName.substring(0, fileName.length()-4)+"_result.txt");
         ResponseCalculate calculator = new ResponseCalculate();
-
         try {
             resultFile.createNewFile();
             FileWriter writer = new FileWriter(resultFile);
@@ -57,7 +56,6 @@ public class DataExport {
     public void importSimulateRequests(FileWriter writer) throws IOException {
         String firstOutput = ElevatorSimulation.time+",A,"+ElevatorSimulation.elevatorA.currentFloor+","+ElevatorSimulation.elevatorA.runState+",B,"+ElevatorSimulation.elevatorB.currentFloor+","+ElevatorSimulation.elevatorB.runState+";";
         writer.write(firstOutput);
-                    
         ServeListNode p = ElevatorSimulation.elevatorA.serveList.head.next;
         while(p!=ElevatorSimulation.elevatorA.serveList.tail) {
             String s = "<"+(p.userCallIdx+1)+","+p.userCall.userFloor+","+p.userCall.userTarget+","+p.serveState+","+"A>";

@@ -29,7 +29,6 @@ class UserCall {
 }
 
 // 电梯服务指令队列（双向链表）
-
 class ServeListHeadNode {
     public ServeListNode head;
     public ServeListNode tail;
@@ -76,10 +75,6 @@ class ElevatorState {
     }
 }
 
-// 电梯声明
-// ElevatorState elevatorA;
-// ElevatorState elevatorB;
-
 // 电梯待响应数据
 class ResponseListNode {
     public int userCallIdx;
@@ -108,6 +103,3 @@ class ResponseListHeadNode {
         nextIdx = 0;
     }
 }
-
-// 电梯待响应指令队列（双向链表）
-// ResponseListHeadNode responseList;

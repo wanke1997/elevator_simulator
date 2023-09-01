@@ -22,7 +22,6 @@ public class Methods {
                 System.out.println(f.getAbsolutePath());
                 DataImport dataImport = new DataImport();
                 DataExport dataExport = new DataExport();
-                
                 dataImport.initSimulation();
                 try {
                     dataImport.loadUserCallArray(f);
@@ -51,13 +50,11 @@ public class Methods {
             System.out.println("You are in movie simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
             int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
-
             if(option == 1) {
                 System.out.println("Please enter the file name, including the extension name");
                 String fileName = ElevatorSimulation.inputScanner.nextLine();
                 File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
                 System.out.println(f.getAbsolutePath());
-
                 DataImport dataImport = new DataImport();
                 dataImport.initSimulation();
                 ElevatorSimulation.time = 0;
@@ -96,15 +93,12 @@ public class Methods {
             System.out.println("You are in full simulation module, please select operations. ");
             System.out.println("Press [1] to input the filename and start function. Press [0] to return to main menu.");
             int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
-
             if(option == 1) {
                 System.out.println("Please enter the file name, including the extension name");
                 String fileName = ElevatorSimulation.inputScanner.nextLine();
                 File f = new File(System.getProperty("user.dir")+"/UserRequests/"+fileName);
                 System.out.println(f.getAbsolutePath());
-
                 DataImport dataImport = new DataImport();
-
                 dataImport.initSimulation();
                 ElevatorSimulation.time = 0;
                 try {
@@ -157,7 +151,6 @@ public class Methods {
                     String fileName = ElevatorSimulation.inputScanner.nextLine();
                     File f = new File(System.getProperty("user.dir")+"/SimulationFiles/"+fileName);
                     System.out.println(f.getAbsolutePath());
-
                     DataImport dataImport = new DataImport();
                     dataImport.initSimulation();
                     Scanner scanner = new Scanner(f);
@@ -226,7 +219,6 @@ public class Methods {
             System.out.println("[3] Configure elevator height");
             System.out.println("[4] Configure delay time");
             System.out.println("[0] return to main menu");
-
             int option = Integer.parseInt(ElevatorSimulation.inputScanner.nextLine());
             System.out.println("Your input: "+option);
             switch(option) {

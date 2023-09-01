@@ -37,7 +37,6 @@ public class ElevatorSimulation {
 
     public static int systemInit() throws FileNotFoundException {
         int checkResult = 1;
-
         File sysConf = new File(System.getProperty("user.dir")+"/SysConf");
         if(!sysConf.exists()) {
             checkResult = 0;
@@ -48,7 +47,6 @@ public class ElevatorSimulation {
             checkResult = -1;
             return checkResult;
         }
-
         Scanner scanner = new Scanner(sysParamFile);
         int totalNum = Integer.parseInt(scanner.nextLine());
         String[] keys = new String[totalNum];
@@ -137,7 +135,6 @@ public class ElevatorSimulation {
                 return checkResult;
             }
         }
-        
         if(pt!=totalNum) {
             checkResult = -7;
         }
@@ -157,7 +154,6 @@ public class ElevatorSimulation {
             System.out.println("[5] Modify system configuration");
             System.out.println("[0] Exit the simulator");
             System.out.println("Now enter your option: ");
-
             int menuFlag = Integer.parseInt(inputScanner.nextLine());
             switch (menuFlag) {
                 case 1:
