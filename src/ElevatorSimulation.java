@@ -74,6 +74,7 @@ public class ElevatorSimulation {
             } else if(strs[0].equals("SimulationFilesPath")) {
                 File simulationFile = new File(System.getProperty("user.dir")+"/"+strs[1]);
                 if(!simulationFile.exists()) {
+                    System.out.println(simulationFile.getAbsolutePath());
                     checkResult = -4;
                     scanner.close();
                     return checkResult;
